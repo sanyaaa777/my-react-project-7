@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/contactsSLice';
-import { nanoid } from 'nanoid';
+import { addContact } from '../../redux/contactsOps';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
@@ -20,7 +19,7 @@ export default function ContactForm() {
       return;
     }
 
-    dispatch(addContact({ id: nanoid(), name, phone }));
+    dispatch(addContact({ name, phone, createdAt: new Date().toISOString() }));
     form.reset();
   };
 
@@ -28,7 +27,7 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit}>
       <input name="name" placeholder="Ім'я" required />
       <input name="phone" placeholder="Телефон" required />
-      <button type="submit">Додати</button>
+      <button type="submit">Додати контакт</button>
     </form>
   );
 }

@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/contactsSLice';
+import { deleteContact } from '../../redux/contactsOps';
+
 
 export default function Contact({ contact }) {
   const dispatch = useDispatch();

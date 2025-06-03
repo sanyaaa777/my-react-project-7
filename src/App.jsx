@@ -1,44 +1,26 @@
-import { useState, useEffect } from 'react';
+
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import ContactForm from './components/ContactForm/ContactForm';
 import SearchBox from './components/SearchBox/SearchBox';
 import ContactList from './components/ContactList/ContactList';
-import initialContacts from './components/Data/ContactsDatabase.json';
+import { fetchContacts } from './redux/contactsOps';
 import './App.css';
 
 function App() {
-  const [contacts, setContacts] = useState(() => {
-    const storedContacts = localStorage.getItem('contacts');
-    return storedContacts ? JSON.parse(storedContacts) : initialContacts;
-  });
-  const [filter, setFilter] = useState('');
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
-  const addContact = (newContact) => {
-    setContacts((prevContacts) => {
-      return [...prevContacts, newContact];
-    });
-  };
-
-  const deleteContact = (contactId) => {
-    setContacts((prevContacts) => {
-      return prevContacts.filter((contact) => contact.id !== contactId);
-    });
-  };
-
-  const visibleContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase()),
-  );
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
-    <>
+    <div className="App">
       <h1>Phonebook</h1>
-      <ContactForm onAdd={addContact} />
-      <SearchBox value={filter} onFilter={setFilter} />
-      <ContactList contacts={visibleContacts} onDelete={deleteContact} />
-    </>
+      <ContactForm />
+      <SearchBox />
+      <ContactList />
+    </div>
   );
 }
 

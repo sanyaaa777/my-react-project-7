@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { changeFilter } from '../../redux/filtersSlice';
+import { setNameFilter } from '../../redux/filtersSlice';
 
 export default function SearchBox() {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ export default function SearchBox() {
       type="text"
       placeholder="Пошук"
       value={filter}
-      onChange={e => dispatch(changeFilter(e.target.value))}
+      onChange={e => dispatch(setNameFilter(e.target.value))}
     />
   );
 }
